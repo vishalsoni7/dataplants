@@ -2,6 +2,10 @@ body {
   background: #f3f3f9;
 }
 
+button {
+  cursor: pointer;
+}
+
 .home-div {
   display: flex;
   margin: 0px 72px 0 0;
@@ -68,10 +72,12 @@ body {
   height: 16px;
   fill: #000;
   margin-right: 0.5rem;
+  cursor: pointer;
 }
 
 .trash {
   width: 14px;
   height: 16px;
   color: #3c1e5a;
+  cursor: pointer;
 }
