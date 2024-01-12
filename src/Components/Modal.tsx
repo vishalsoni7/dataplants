@@ -26,9 +26,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
   };
 
   const handleNewData = () => {
-    console.log(id);
     if (id) {
-      console.log("if");
       // @ts-ignore
       updateSchedule(dispatch, id, input);
     } else {
