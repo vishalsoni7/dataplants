@@ -7,7 +7,7 @@ const User = () => {
     <div className="user-div">
       <span>
         <a
-          href="https://github.com/vishalsoni7"
+          href="https://vishalsoni.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
         >
