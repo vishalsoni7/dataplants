@@ -30,10 +30,12 @@ const ScheduleTable: FC<ScheduleTableProps> = ({
       <tbody>
         {scheduleState?.schedule?.map((schedule) => (
           <tr key={schedule._id}>
-            <td className="td-id">{schedule.title}</td>
+            <td className="td-id">{schedule?.title}</td>
             <td>{schedule.description}</td>
-            <td className="td-amount">{schedule.subject}</td>
-            <td className="td-right">{schedule.time}</td>
+            <td className="td-amount">{schedule?.subject}</td>
+            <td className="td-right">
+              {schedule?.repeat} {schedule?.time}
+            </td>
             <td>
               <FaPen className="edit" onClick={() => editFn(schedule)} />
               <FaRegTrashAlt

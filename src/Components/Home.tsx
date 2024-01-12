@@ -31,6 +31,8 @@ const Home: FC = () => {
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
+  console.log(scheduleState.schedule);
+
   return (
     <div className="home-div">
       <div className="side-bar"> </div>
