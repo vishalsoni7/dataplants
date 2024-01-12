@@ -17,6 +17,8 @@ const Modal: FC<ModalProps> = ({ id }) => {
 
   const [input, setInput] = useState(findSchedule);
 
+  const isDoneButtonDisabled = !input.title || !input.description;
+
   const handleFrequencyChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -141,7 +143,11 @@ const Modal: FC<ModalProps> = ({ id }) => {
         <button className="cancel-btn" onClick={() => handleModal(dispatch)}>
           Cancel
         </button>
-        <button className="done-btn" onClick={handleNewData}>
+        <button
+          className="done-btn"
+          onClick={handleNewData}
+          disabled={isDoneButtonDisabled}
+        >
           Done
         </button>
       </div>
