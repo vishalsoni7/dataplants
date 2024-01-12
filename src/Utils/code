@@ -1,0 +1,27 @@
+// @ts-ignore
+// const findSchedule = scheduleState.schedule.find((item) => item._id === id);
+
+// const titleValue = id ? findSchedule.title : input.title;
+// const descriptionValue = id ? findSchedule.description : input.description;
+// const subjectValue = id ? findSchedule.subject : input.subject;
+// const frequencyValue = id ? findSchedule.frequency : input.frequency;
+// const repeatValue = id ? findSchedule.repeat : input.repeat;
+// const timeValue = id ? findSchedule.time : input.time;
+
+// const handleNewData = () => {
+//   if (id) {
+//     // @ts-ignore
+//     updateSchedule(dispatch, id, input);
+//   } else {
+//     addSchedule(dispatch, input);
+//     setInput({
+//       title: "",
+//       description: "",
+//       subject: "",
+//       frequency: "",
+//       repeat: "",
+//       time: "",
+//     });
+//   }
+//   handleModal(dispatch);
+// };

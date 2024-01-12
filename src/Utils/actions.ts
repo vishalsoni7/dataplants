@@ -33,6 +33,7 @@ export const addSchedule = async (
   input: Omit<Schedule, "_id">
 ) => {
   try {
+    console.log(input);
     const response = await axios.post(baseUrl, input);
     dispatch({ type: "HANDLE_ADD_SCHEDULE", payload: response.data });
   } catch (error) {
@@ -98,3 +99,19 @@ export const searchWithDebounce = debounce(
   },
   500
 );
+
+export const handleSearchChange = (
+  dispatch: Dispatch<ActionProp>,
+  newSearchValue: string
+) => {
+  dispatch({
+    type: "HANDLE_INPUT",
+    payload: newSearchValue,
+  });
+
+  if (newSearchValue.trim() === "") {
+    fetchData(dispatch);
+  } else {
+    searchWithDebounce(dispatch, newSearchValue);
+  }
+};

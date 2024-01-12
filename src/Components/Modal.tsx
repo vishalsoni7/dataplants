@@ -1,4 +1,4 @@
-import { useState, useContext, ChangeEvent, FC } from "react";
+import { useState, useContext, ChangeEvent, FC, useEffect } from "react";
 
 import { days } from "../Utils/staticdata";
 import { ModalProps } from "../Utils/types";
@@ -19,22 +19,15 @@ const Modal: FC<ModalProps> = ({ id }) => {
     time: "",
   });
 
-  // @ts-ignore
-  const findSchedule = scheduleState.schedule.find((item) => item._id === id);
-
-  const titleValue = id ? findSchedule.title : input.title;
-  const descriptionValue = id ? findSchedule.description : input.description;
-  const subjectValue = id ? findSchedule.subject : input.subject;
-  const frequencyValue = id ? findSchedule.frequency : input.frequency;
-  const repeatValue = id ? findSchedule.repeat : input.repeat;
-  const timeValue = id ? findSchedule.time : input.time;
+  const { title, description, subject, frequency, repeat, time } =
+    // @ts-ignore
+    scheduleState.schedule.find((item) => item._id === id) || {};
 
   const handleFrequencyChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    // @ts-ignore
-    setInput((prevInput) => ({ ...prevInput, [name]: value }));
+    setInput((pre) => ({ ...pre, [name]: value }));
   };
 
   const handleNewData = () => {
@@ -55,6 +48,10 @@ const Modal: FC<ModalProps> = ({ id }) => {
     handleModal(dispatch);
   };
 
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
+
   return (
     <div className="modal-div">
       <div>
@@ -65,7 +62,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Subject"
             name="title"
-            defaultValue={titleValue}
+            defaultValue={title}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -76,7 +73,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Description"
             name="description"
-            defaultValue={descriptionValue}
+            defaultValue={description}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -87,7 +84,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Subject"
             name="subject"
-            defaultValue={subjectValue}
+            defaultValue={subject}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -96,7 +93,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
           <span> Frequency </span>
           <select
             name="frequency"
-            defaultValue={frequencyValue}
+            defaultValue={frequency}
             onChange={handleFrequencyChange}
           >
             <option value="Daily">Daily</option>
@@ -105,12 +102,12 @@ const Modal: FC<ModalProps> = ({ id }) => {
           </select>
         </div>
 
-        {input.frequency === "Monthly" && (
+        {frequency === "Monthly" && (
           <div className="modal-input-div">
             <span> Repeat </span>
             <select
               name="repeat"
-              defaultValue={repeatValue}
+              defaultValue={repeat}
               onChange={handleFrequencyChange}
             >
               <option value="First Monday">First Monday</option>
@@ -119,7 +116,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
           </div>
         )}
 
-        {input?.frequency === "Weekly" && (
+        {frequency === "Weekly" && (
           <div className="modal-input-div">
             <span> Repeat </span>
             <div className="day-initial">
@@ -144,7 +141,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
           <input
             type="time"
             name="time"
-            defaultValue={timeValue}
+            defaultValue={time}
             onChange={handleFrequencyChange}
           />
         </div>

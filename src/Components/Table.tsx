@@ -10,6 +10,12 @@ const ScheduleTable: FC<ScheduleTableProps> = ({
   deleteSchedule,
   dispatch,
 }) => {
+  // @ts-ignore
+  const editFn = (schedule) => {
+    setSelectedId(schedule?._id);
+    handleModal(dispatch);
+  };
+
   return (
     <table>
       <thead>
@@ -35,13 +41,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({
               })}
             </td>
             <td>
-              <FaPen
-                className="edit"
-                onClick={() => {
-                  setSelectedId(schedule?._id);
-                  handleModal(dispatch);
-                }}
-              />
+              <FaPen className="edit" onClick={() => editFn(schedule)} />
               <FaRegTrashAlt
                 className="trash"
                 onClick={() => deleteSchedule(dispatch, schedule?._id)}

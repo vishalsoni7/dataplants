@@ -1,12 +1,11 @@
-import { useState, useContext, FC } from "react";
+import { useState, useContext, FC, ChangeEvent } from "react";
 
 import { ScheduleContextProps } from "../Utils/types";
 import { ScheduleContext } from "../Context/ScheduleContext";
 import {
   deleteSchedule,
   handleModal,
-  searchWithDebounce,
-  fetchData,
+  handleSearchChange,
 } from "../Utils/actions";
 
 import Modal from "./Modal";
@@ -21,19 +20,11 @@ const Home: FC = () => {
     ScheduleContext
   );
 
-  const handleSearchChange = (event: any) => {
+  const onChangeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const newSearchValue = event.target.value;
-
-    dispatch({
-      type: "HANDLE_INPUT",
-      payload: newSearchValue,
-    });
-
-    if (newSearchValue.trim() === "") {
-      fetchData(dispatch);
-    } else {
-      searchWithDebounce(dispatch, newSearchValue);
-    }
+    handleSearchChange(dispatch, newSearchValue);
   };
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -45,7 +36,7 @@ const Home: FC = () => {
         <div className="input-div">
           <input
             placeholder="Search"
-            onChange={handleSearchChange}
+            onChange={onChangeHandler}
             value={scheduleState.input}
           />
           <button onClick={() => handleModal(dispatch)}>
