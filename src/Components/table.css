@@ -2,7 +2,6 @@ table {
   padding: 0.5rem;
   border-collapse: collapse;
   height: 42px;
-  flex-shrink: 0;
   text-align: left;
   margin: 24px 56px 0 24px;
   width: -webkit-fill-available;
@@ -15,7 +14,7 @@ table thead {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  background: var(--Blue10, rgba(60, 30, 90, 0.1));
+  background: rgba(60, 30, 90, 0.1);
 }
 
 table thead th {
@@ -26,7 +25,7 @@ table thead th {
 table tbody td {
   height: 60px;
   padding: 0 0.5rem;
-  border-bottom: 1px solid var(--Blue10, rgba(60, 30, 90, 0.1));
+  border-bottom: 1px solid rgba(60, 30, 90, 0.1);
   background: #fff;
 }
 
@@ -54,10 +53,13 @@ table tbody tr td:nth-child(2) {
   width: 558px;
 }
 
-/* table tbody tr td:nth-child(3) {
-  width: 111px;
-} */
-
 table tbody tr td:nth-child(4) {
   width: 111px;
+}
+
+@media only screen and (max-width: 2532px) {
+  table {
+    margin: 24px 20px 0 20px;
+    font-size: 16px;
+  }
 }
