@@ -1,21 +1,42 @@
 import axios from "axios";
+import { ActionProp, DisableProp, Schedule } from "./types";
+import { Dispatch } from "react";
 
 const baseUrl =
   "https://b48a27e3-f93a-4b42-a2b3-18d6d6248294-00-2asqk9wo9g4wi.sisko.replit.dev/schedules";
 
-// export const handleModal = (dispatch: any) => {
-//   // @ts-ignore
-//   dispatch({ type: "HANDLE_MODAL", payload: !payload });
-// };
+export const isFieldsEmpty = (input: DisableProp) => {
+  return (
+    Object.values(input).every((value) => value === "") ||
+    !input.title ||
+    !input.description ||
+    !input.time
+  );
+};
 
-export const fetchData = async (dispatch: any) => {
+export const handleModal = (dispatch: Dispatch<ActionProp>) => {
+  dispatch({ type: "HANDLE_MODAL" });
+};
+
+export const fetchData = async (dispatch: Dispatch<ActionProp>) => {
   try {
     const data = await axios.get(baseUrl);
-    // console.log(data.data);
     dispatch({ type: "FETCH_DATA", payload: data.data });
   } catch (error) {
-    console.log("Failed to fetch data", error);
+    console.error("Failed to fetch data", error);
     dispatch({ type: "FETCHING_DATA_FAILURE", payload: error });
+  }
+};
+
+export const addSchedule = async (
+  dispatch: Dispatch<ActionProp>,
+  input: Omit<Schedule, "_id">
+) => {
+  try {
+    const response = await axios.post(baseUrl, input);
+    dispatch({ type: "HANDLE_ADD_SCHEDULE", payload: response.data });
+  } catch (error) {
+    console.error("Failed to adding data", error);
   }
 };
 

@@ -1,22 +1,21 @@
-import { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, ReactNode } from "react";
 import { reducer, initialState } from "../Utils/reducer";
+import { ScheduleContextProps, ScheduleProviderProps } from "../Utils/types";
 
 import { fetchData } from "../Utils/actions";
 
-type ScheduleContextProvierType = {
-  children: React.ReactNode;
-};
+export const ScheduleContext = createContext<ScheduleContextProps | null>(null);
 
-export const ScheduleContext = createContext(null);
-
-export const ScheduleProvider = ({ children }: ScheduleContextProvierType) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const ScheduleProvider: React.FC<ScheduleProviderProps> = ({
+  children,
+}) => {
+  const [scheduleState, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     fetchData(dispatch);
   }, []);
 
-  const values: any = { state, dispatch };
+  const values: ScheduleContextProps = { scheduleState, dispatch };
 
   return (
     <ScheduleContext.Provider value={values}>

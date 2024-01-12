@@ -1,31 +1,22 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useContext, FC } from "react";
 
-import { FiPlusCircle } from "react-icons/fi";
-import { FaPen } from "react-icons/fa";
-import { FaRegTrashAlt } from "react-icons/fa";
-
-import { reducer, initialState } from "../Utils/reducer";
-
-import { fetchData, deleteSchedule } from "../Utils/actions";
+import { ScheduleContextProps } from "../Utils/types";
+import { ScheduleContext } from "../Context/ScheduleContext";
+import { deleteSchedule, handleModal } from "../Utils/actions";
 
 import Modal from "./Modal";
+import ScheduleTable from "./Table";
 
+import { FiPlusCircle } from "react-icons/fi";
 import "../Components/table.css";
 
-const Home = () => {
+const Home: FC = () => {
   // @ts-ignore
-  const [scheduleState, dispatch] = useReducer(reducer, initialState);
+  const { scheduleState, dispatch } = useContext<ScheduleContextProps | null>(
+    ScheduleContext
+  );
 
-  const [selectedId, setSelectedId] = useState(null);
-  const [modal, setModal] = useState(false);
-
-  const handleModal = () => {
-    setModal((modal) => !modal);
-  };
-
-  useEffect(() => {
-    fetchData(dispatch);
-  }, []);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
     <div className="home-div">
@@ -33,52 +24,25 @@ const Home = () => {
       <div className="top-heading-div">
         <div className="input-div">
           <input placeholder="Search" />
-          <button onClick={handleModal}>
-            <FiPlusCircle className="add-svg" /> Add{" "}
+          <button onClick={() => handleModal(dispatch)}>
+            <FiPlusCircle className="add-svg" /> Add
           </button>
         </div>
         <>
-          <table>
-            <thead>
-              <tr className="t-row">
-                <th className="check-box-th">Title</th>
-                <th className="th-order">Description</th>
-                <th>Subject</th>
-                <th>Schedule</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {scheduleState?.schedule?.map((schedule: any) => (
-                <tr key={schedule._id}>
-                  <td className="td-id">{schedule.title}</td>
-                  <td>{schedule.description}</td>
-                  <td className="td-amount">{schedule.subject}</td>
-                  <td className="td-right">
-                    {new Date(schedule.time).toLocaleDateString()}
-                  </td>
-                  <td>
-                    <FaPen
-                      className="edit"
-                      onClick={() => {
-                        return setSelectedId(schedule._id), handleModal();
-                      }}
-                    />
-                    <FaRegTrashAlt
-                      className="trash"
-                      onClick={() => deleteSchedule(dispatch, schedule._id)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ScheduleTable
+            scheduleState={scheduleState}
+            setSelectedId={setSelectedId}
+            handleModal={handleModal}
+            deleteSchedule={deleteSchedule}
+            dispatch={dispatch}
+          />
         </>
       </div>
-      {modal && (
+      {scheduleState.modal && (
         <div
           onClick={() => {
-            return setSelectedId(null), handleModal();
+            setSelectedId(null);
+            handleModal(dispatch);
           }}
           className="modal_outer_div"
         >
@@ -86,7 +50,7 @@ const Home = () => {
             onClick={(e) => e.stopPropagation()}
             className="modal_outer_container"
           >
-            <Modal id={selectedId} data={scheduleState.schedule} />
+            <Modal id={selectedId} />
           </div>
         </div>
       )}

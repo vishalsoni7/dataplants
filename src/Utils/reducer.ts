@@ -1,4 +1,6 @@
-export const initialState = {
+import { State, Action } from "./types";
+
+export const initialState: State = {
   schedule: [],
   input: "",
   loading: false,
@@ -6,7 +8,7 @@ export const initialState = {
   modal: false,
 };
 
-export const reducer = (state = initialState, action: any) => {
+export const reducer = (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
 
   switch (type) {
@@ -22,6 +24,12 @@ export const reducer = (state = initialState, action: any) => {
         error: payload,
       };
 
+    case "HANDLE_ADD_SCHEDULE":
+      return {
+        ...state,
+        schedule: [...state.schedule, payload],
+      };
+
     case "HANDLE_LOADING":
       return {
         ...state,
@@ -31,12 +39,11 @@ export const reducer = (state = initialState, action: any) => {
     case "HANDLE_MODAL":
       return {
         ...state,
-        modal: payload,
+        modal: !state.modal,
       };
 
     case "DELETE_SCHEDULE":
       const updatedSchedule = state.schedule.filter(
-        // @ts-ignore
         (data) => data._id !== payload._id
       );
 
