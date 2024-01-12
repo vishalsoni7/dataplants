@@ -22,7 +22,6 @@ export type Schedule = {
 export type State = {
   schedule: Schedule[];
   input: string;
-  loading: boolean;
   error: null | string;
   modal: boolean;
 };

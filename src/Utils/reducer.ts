@@ -3,7 +3,6 @@ import { State, Action } from "./types";
 export const initialState: State = {
   schedule: [],
   input: "",
-  loading: false,
   error: null,
   modal: false,
 };
@@ -28,12 +27,6 @@ export const reducer = (state: State = initialState, action: Action): State => {
       return {
         ...state,
         schedule: [...state.schedule, payload],
-      };
-
-    case "HANDLE_LOADING":
-      return {
-        ...state,
-        loading: payload,
       };
 
     case "HANDLE_MODAL":

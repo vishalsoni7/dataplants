@@ -33,13 +33,7 @@ const ScheduleTable: FC<ScheduleTableProps> = ({
             <td className="td-id">{schedule.title}</td>
             <td>{schedule.description}</td>
             <td className="td-amount">{schedule.subject}</td>
-            <td className="td-right">
-              {new Date(schedule.time).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}
-            </td>
+            <td className="td-right">{schedule.time}</td>
             <td>
               <FaPen className="edit" onClick={() => editFn(schedule)} />
               <FaRegTrashAlt

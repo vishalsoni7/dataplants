@@ -90,7 +90,15 @@ button {
   height: inherit;
   gap: 1rem;
 }
+
 .user-div span {
   font-size: x-large;
   cursor: pointer;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

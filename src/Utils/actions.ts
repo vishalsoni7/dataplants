@@ -33,7 +33,6 @@ export const addSchedule = async (
   input: Omit<Schedule, "_id">
 ) => {
   try {
-    console.log(input);
     const response = await axios.post(baseUrl, input);
     dispatch({ type: "HANDLE_ADD_SCHEDULE", payload: response.data });
   } catch (error) {
@@ -50,7 +49,7 @@ export const updateSchedule = async (
     const response = await axios.patch(`${baseUrl}/${id}`, updatedData);
     dispatch({ type: "HANDLE_UPDATE", payload: response.data });
   } catch (error) {
-    console.error("Failed to updating data", error);
+    console.error("Failed to update data", error);
   }
 };
 
