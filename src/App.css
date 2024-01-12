@@ -29,7 +29,7 @@ button {
 }
 
 .input-div {
-  margin: 70px 56px 0 24px;
+  margin: 40px 56px 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -79,5 +79,18 @@ button {
   width: 14px;
   height: 16px;
   color: #3c1e5a;
+  cursor: pointer;
+}
+
+.user-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 56px 0 0;
+  height: inherit;
+  gap: 1rem;
+}
+.user-div span {
+  font-size: x-large;
   cursor: pointer;
 }

@@ -12,7 +12,9 @@ import Modal from "./Modal";
 import ScheduleTable from "./Table";
 
 import { FiPlusCircle } from "react-icons/fi";
+
 import "../Components/table.css";
+import User from "./User";
 
 const Home: FC = () => {
   // @ts-ignore
@@ -31,8 +33,10 @@ const Home: FC = () => {
 
   return (
     <div className="home-div">
-      <div className="side-bar"></div>
+      <div className="side-bar"> </div>
       <div className="top-heading-div">
+        <User />
+
         <div className="input-div">
           <input
             placeholder="Search"
