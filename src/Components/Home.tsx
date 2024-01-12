@@ -2,7 +2,12 @@ import { useState, useContext, FC } from "react";
 
 import { ScheduleContextProps } from "../Utils/types";
 import { ScheduleContext } from "../Context/ScheduleContext";
-import { deleteSchedule, handleModal } from "../Utils/actions";
+import {
+  deleteSchedule,
+  handleModal,
+  searchWithDebounce,
+  fetchData,
+} from "../Utils/actions";
 
 import Modal from "./Modal";
 import ScheduleTable from "./Table";
@@ -16,6 +21,21 @@ const Home: FC = () => {
     ScheduleContext
   );
 
+  const handleSearchChange = (event: any) => {
+    const newSearchValue = event.target.value;
+
+    dispatch({
+      type: "HANDLE_INPUT",
+      payload: newSearchValue,
+    });
+
+    if (newSearchValue.trim() === "") {
+      fetchData(dispatch);
+    } else {
+      searchWithDebounce(dispatch, newSearchValue);
+    }
+  };
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
@@ -23,7 +43,11 @@ const Home: FC = () => {
       <div className="side-bar"></div>
       <div className="top-heading-div">
         <div className="input-div">
-          <input placeholder="Search" />
+          <input
+            placeholder="Search"
+            onChange={handleSearchChange}
+            value={scheduleState.input}
+          />
           <button onClick={() => handleModal(dispatch)}>
             <FiPlusCircle className="add-svg" /> Add
           </button>

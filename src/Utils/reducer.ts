@@ -52,30 +52,35 @@ export const reducer = (state: State = initialState, action: Action): State => {
         schedule: updatedSchedule,
       };
 
-    case "SEARCH_SCHEDULES_BY_TITLE_REQUEST":
+    case "HANDLE_UPDATE":
       return {
         ...state,
-        loading: true,
+        schedule: state.schedule.map((item) =>
+          item._id === payload._id ? { ...item, ...payload } : item
+        ),
       };
 
-    case "SEARCH_SCHEDULES_BY_TITLE_SUCCESS":
+    case "SEARCH_BY_TITLE":
+      if (!payload?.title?.trim()) {
+        return {
+          ...state,
+          schedule: state.schedule,
+        };
+      }
+
+      const filteredSchedules = state.schedule.filter((schedule) =>
+        schedule.title.toLowerCase().includes(payload?.title?.toLowerCase())
+      );
+
       return {
         ...state,
-        loading: false,
-        schedule: payload,
+        schedule: filteredSchedules,
       };
 
-    case "SEARCH_SCHEDULES_BY_TITLE_FAILURE":
+    case "HANDLE_INPUT":
       return {
         ...state,
-        loading: false,
-        error: payload,
-      };
-
-    case "SEARCH_SCHEDULES_BY_TITLE":
-      return {
-        ...state,
-        input: payload,
+        input: action.payload,
       };
 
     default:

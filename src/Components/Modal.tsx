@@ -2,14 +2,14 @@ import { useState, useContext, ChangeEvent, FC } from "react";
 
 import { days } from "../Utils/staticdata";
 import { ModalProps } from "../Utils/types";
-import { addSchedule, handleModal, isFieldsEmpty } from "../Utils/actions";
+import { addSchedule, handleModal, updateSchedule } from "../Utils/actions";
 import { ScheduleContext } from "../Context/ScheduleContext";
 
 import "../Components/modal.css";
 
 const Modal: FC<ModalProps> = ({ id }) => {
   // @ts-ignore
-  const { dispatch } = useContext(ScheduleContext);
+  const { scheduleState, dispatch } = useContext(ScheduleContext);
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -19,6 +19,16 @@ const Modal: FC<ModalProps> = ({ id }) => {
     time: "",
   });
 
+  // @ts-ignore
+  const findSchedule = scheduleState.schedule.find((item) => item._id === id);
+
+  const titleValue = id ? findSchedule.title : input.title;
+  const descriptionValue = id ? findSchedule.description : input.description;
+  const subjectValue = id ? findSchedule.subject : input.subject;
+  const frequencyValue = id ? findSchedule.frequency : input.frequency;
+  const repeatValue = id ? findSchedule.repeat : input.repeat;
+  const timeValue = id ? findSchedule.time : input.time;
+
   const handleFrequencyChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -27,16 +37,22 @@ const Modal: FC<ModalProps> = ({ id }) => {
     setInput((prevInput) => ({ ...prevInput, [name]: value }));
   };
 
-  const addNewSchedule = () => {
-    addSchedule(dispatch, input);
-    setInput({
-      title: "",
-      description: "",
-      subject: "",
-      frequency: "",
-      repeat: "",
-      time: "",
-    });
+  const handleNewData = () => {
+    if (id) {
+      // @ts-ignore
+      updateSchedule(dispatch, id, input);
+    } else {
+      addSchedule(dispatch, input);
+      setInput({
+        title: "",
+        description: "",
+        subject: "",
+        frequency: "",
+        repeat: "",
+        time: "",
+      });
+    }
+    handleModal(dispatch);
   };
 
   return (
@@ -49,7 +65,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Subject"
             name="title"
-            value={input?.title}
+            defaultValue={titleValue}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -60,7 +76,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Description"
             name="description"
-            value={input?.description}
+            defaultValue={descriptionValue}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -71,7 +87,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             type="text"
             placeholder="Sample Subject"
             name="subject"
-            value={input?.subject}
+            defaultValue={subjectValue}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -80,7 +96,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
           <span> Frequency </span>
           <select
             name="frequency"
-            value={input.frequency}
+            defaultValue={frequencyValue}
             onChange={handleFrequencyChange}
           >
             <option value="Daily">Daily</option>
@@ -94,7 +110,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
             <span> Repeat </span>
             <select
               name="repeat"
-              value={input?.repeat}
+              defaultValue={repeatValue}
               onChange={handleFrequencyChange}
             >
               <option value="First Monday">First Monday</option>
@@ -128,7 +144,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
           <input
             type="time"
             name="time"
-            value={input?.time}
+            defaultValue={timeValue}
             onChange={handleFrequencyChange}
           />
         </div>
@@ -137,14 +153,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
         <button className="cancel-btn" onClick={() => handleModal(dispatch)}>
           Cancel
         </button>
-        <button
-          className="done-btn"
-          onClick={() => {
-            addNewSchedule();
-            handleModal(dispatch);
-          }}
-          disabled={isFieldsEmpty(input)}
-        >
+        <button className="done-btn" onClick={handleNewData}>
           Done
         </button>
       </div>

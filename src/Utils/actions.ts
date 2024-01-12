@@ -40,7 +40,23 @@ export const addSchedule = async (
   }
 };
 
-export const deleteSchedule = async (dispatch: any, id: string) => {
+export const updateSchedule = async (
+  dispatch: Dispatch<ActionProp>,
+  id: string,
+  updatedData: Schedule
+) => {
+  try {
+    const response = await axios.patch(`${baseUrl}/${id}`, updatedData);
+    dispatch({ type: "HANDLE_UPDATE", payload: response.data });
+  } catch (error) {
+    console.error("Failed to updating data", error);
+  }
+};
+
+export const deleteSchedule = async (
+  dispatch: Dispatch<ActionProp>,
+  id: string
+) => {
   try {
     const response = await axios.delete(`${baseUrl}/${id}`);
     dispatch({ type: "DELETE_SCHEDULE", payload: response.data });
@@ -49,33 +65,36 @@ export const deleteSchedule = async (dispatch: any, id: string) => {
   }
 };
 
-export const searchByTitle = async (dispatch: any, title: string) => {
+export const searchByTitle = async (
+  dispatch: Dispatch<ActionProp>,
+  title: string
+) => {
   try {
-    dispatch({ type: "SEARCH_SCHEDULES_BY_TITLE_REQUEST" });
-
     const response = await axios.get(`${baseUrl}/search`, {
       params: { title },
     });
-    console.log(response);
+
     dispatch({
-      type: "SEARCH_SCHEDULES_BY_TITLE_SUCCESS",
-      payload: response.data,
+      type: "SEARCH_BY_TITLE",
+      payload: response?.data,
     });
   } catch (error) {
     console.warn("Error schedules by title", error);
-    dispatch({
-      type: "SEARCH_SCHEDULES_BY_TITLE_FAILURE",
-      // @ts-ignore
-      payload: error.message,
-    });
   }
 };
 
-// const debounce = (callback: any, delay: number) => {
-//     let timer: any;
+const debounce = (callback: any, delay: number) => {
+  let timer: any;
 
-//     return (...args: any) => {
-//       if (timer) clearTimeout(timer);
-//       timer = setTimeout(() => callback(...args), delay);
-//     };
-//   };
+  return (...args: any) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => callback(...args), delay);
+  };
+};
+
+export const searchWithDebounce = debounce(
+  (dispatch: Dispatch<ActionProp>, title: string) => {
+    searchByTitle(dispatch, title);
+  },
+  500
+);
