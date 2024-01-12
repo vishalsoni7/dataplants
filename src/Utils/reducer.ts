@@ -62,7 +62,10 @@ export const reducer = (state: State = initialState, action: Action): State => {
       }
 
       const filteredSchedules = state.schedule.filter((schedule) =>
-        schedule.title.toLowerCase().includes(payload?.title?.toLowerCase())
+        schedule.title
+          .trim()
+          .toLowerCase()
+          .includes(payload?.title?.trim().toLowerCase())
       );
 
       return {
