@@ -51,8 +51,6 @@ const Modal: FC<ModalProps> = ({ id }) => {
     setSelectedId(null);
   };
 
-  console.log(id);
-
   return (
     <div className="modal-div">
       <div>
