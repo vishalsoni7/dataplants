@@ -1,7 +1,7 @@
 import { useState, useContext, ChangeEvent, FC, Dispatch } from "react";
 
 import { days } from "../Utils/staticdata";
-import { ModalProps, ScheduleContextProps } from "../Utils/types";
+import { ModalProps } from "../Utils/types";
 import { addSchedule, handleModal, updateSchedule } from "../Utils/actions";
 import { ScheduleContext } from "../Context/ScheduleContext";
 
@@ -9,7 +9,8 @@ import "../Components/modal.css";
 
 const Modal: FC<ModalProps> = ({ id }) => {
   // @ts-ignore
-  const { scheduleState, dispatch } = useContext(ScheduleContext);
+  const { scheduleState, dispatch, setSelectedId } =
+    useContext(ScheduleContext);
 
   const findSchedule =
     // @ts-ignore
@@ -44,6 +45,13 @@ const Modal: FC<ModalProps> = ({ id }) => {
     }
     handleModal(dispatch);
   };
+
+  const handleCancel = () => {
+    handleModal(dispatch);
+    setSelectedId(null);
+  };
+
+  console.log(id);
 
   return (
     <div className="modal-div">
@@ -140,7 +148,7 @@ const Modal: FC<ModalProps> = ({ id }) => {
         </div>
       </div>
       <div className="btn-div">
-        <button className="cancel-btn" onClick={() => handleModal(dispatch)}>
+        <button className="cancel-btn" onClick={handleCancel}>
           Cancel
         </button>
         <button

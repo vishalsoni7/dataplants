@@ -13,8 +13,12 @@ export const isFieldsEmpty = (input: DisableProp) => {
   );
 };
 
-export const handleModal = (dispatch: Dispatch<ActionProp>) => {
+export const handleModal = (
+  dispatch: Dispatch<ActionProp>,
+  id?: string | null
+) => {
   dispatch({ type: "HANDLE_MODAL" });
+  id = null;
 };
 
 export const fetchData = async (dispatch: Dispatch<ActionProp>) => {

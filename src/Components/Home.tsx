@@ -18,9 +18,8 @@ import User from "./User";
 
 const Home: FC = () => {
   // @ts-ignore
-  const { scheduleState, dispatch } = useContext<ScheduleContextProps | null>(
-    ScheduleContext
-  );
+  const { scheduleState, dispatch, selectedId, setSelectedId } =
+    useContext<ScheduleContextProps | null>(ScheduleContext);
 
   const onChangeHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -28,8 +27,6 @@ const Home: FC = () => {
     const newSearchValue = event.target.value;
     handleSearchChange(dispatch, newSearchValue);
   };
-
-  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
     <div className="home-div">

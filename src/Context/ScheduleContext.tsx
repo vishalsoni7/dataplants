@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 import { reducer, initialState } from "../Utils/reducer";
 import { ScheduleContextProps, ScheduleProviderProps } from "../Utils/types";
 
@@ -11,11 +11,18 @@ export const ScheduleProvider: React.FC<ScheduleProviderProps> = ({
 }) => {
   const [scheduleState, dispatch] = useReducer(reducer, initialState);
 
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   useEffect(() => {
     fetchData(dispatch);
   }, []);
 
-  const values: ScheduleContextProps = { scheduleState, dispatch };
+  const values: ScheduleContextProps = {
+    selectedId,
+    setSelectedId,
+    scheduleState,
+    dispatch,
+  };
 
   return (
     <ScheduleContext.Provider value={values}>

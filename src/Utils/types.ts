@@ -5,8 +5,10 @@ export type ScheduleProviderProps = {
 };
 
 export type ScheduleContextProps = {
-  scheduleState: any;
-  dispatch: React.Dispatch<any>;
+  selectedId: null | string;
+  setSelectedId: React.Dispatch<React.SetStateAction<null | string>>;
+  scheduleState: State;
+  dispatch: React.Dispatch<Action>;
 };
 
 export type Schedule = {
