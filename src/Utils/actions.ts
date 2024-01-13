@@ -2,7 +2,7 @@ import axios from "axios";
 import { ActionProp, DisableProp, Schedule } from "./types";
 import { Dispatch } from "react";
 
-const baseUrl = "https://dataplant.vercel.app";
+const baseUrl = "https://dataplant.vercel.app/schedules";
 
 export const isFieldsEmpty = (input: DisableProp) => {
   return (
