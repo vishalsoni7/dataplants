@@ -1,4 +1,4 @@
-import { useState, useContext, FC, ChangeEvent } from "react";
+import { useContext, FC, ChangeEvent } from "react";
 
 import { ScheduleContextProps } from "../Utils/types";
 import { ScheduleContext } from "../Context/ScheduleContext";
@@ -54,8 +54,9 @@ const Home: FC = () => {
           />
         </>
       </div>
+
       {scheduleState.modal && (
-        <div
+        <div // @ts-ignore
           onClick={() => {
             setSelectedId(null);
             handleModal(dispatch);

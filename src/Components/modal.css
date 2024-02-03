@@ -141,7 +141,8 @@
   border-radius: 50%;
 }
 
-.day-initial span:hover {
+.day-initial span:hover,
+.day-initial span.active {
   transition: 0.3s;
   color: #fff;
   background-color: #391e5a;

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer, useState } from "react";
-import { reducer, initialState } from "../Utils/reducer";
 import { ScheduleContextProps, ScheduleProviderProps } from "../Utils/types";
+import { reducer, initialState } from "../Utils/reducer";
 
 import { fetchData } from "../Utils/actions";
 

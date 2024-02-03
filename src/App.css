@@ -18,7 +18,7 @@ button {
   flex-shrink: 0;
   border-top: 1px solid #d8d2de;
   border-bottom: 1px solid #d8d2de;
-  background: var(--Blue10, rgba(60, 30, 90, 0.1));
+  background: rgba(60, 30, 90, 0.1);
 }
 
 .side-bar {
@@ -29,11 +29,10 @@ button {
 }
 
 .input-div {
-  margin: 40px 56px 0 24px;
   display: flex;
   align-items: center;
-
   justify-content: space-between;
+  margin: 40px 56px 0 24px;
 }
 
 .input-div input {
