@@ -16,8 +16,6 @@ const ScheduleTable: FC<ScheduleTableProps> = ({
     handleModal(dispatch);
   };
 
-  console.log(scheduleState?.schedule[2]);
-
   return (
     <table>
       <thead>
